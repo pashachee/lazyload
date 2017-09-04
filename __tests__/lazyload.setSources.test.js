@@ -28,6 +28,7 @@ describe("setSources for image", () => {
     let img1 = "http://placehold.it/1x1";
     let img200 = "http://placehold.it/200x200";
     let img400 = "http://placehold.it/400x400";
+    let setSourcesForPicture = jest.fn();
 
     beforeEach(() => {
         // Parent is a div
@@ -40,7 +41,8 @@ describe("setSources for image", () => {
             "src": img200,
             "srcset": img400
         };
-        setSources(img, lazyloadSettings);
+        setSources(setSourcesForPicture, img, lazyloadSettings);
+        expect(setSourcesForPicture).toHaveBeenCalled();
         expect(img).toHaveAttributeValue("src", img200);
         expect(img).toHaveAttributeValue("srcset", img400);
     });
@@ -52,7 +54,8 @@ describe("setSources for image", () => {
         };
         img.setAttribute("src", img1);
         img.setAttribute("srcset", img1);
-        setSources(img, lazyloadSettings);
+        setSources(setSourcesForPicture, img, lazyloadSettings);
+        expect(setSourcesForPicture).toHaveBeenCalled();
         expect(img).toHaveAttributeValue("src", img200);
         expect(img).toHaveAttributeValue("srcset", img400);
     });
@@ -63,7 +66,8 @@ describe("setSources for image", () => {
         };
         img.setAttribute("src", img200);
         img.setAttribute("srcset", img400);
-        setSources(img, lazyloadSettings);
+        setSources(setSourcesForPicture, img, lazyloadSettings);
+        expect(setSourcesForPicture).toHaveBeenCalled();
         expect(img).toHaveAttributeValue("src", img200);
         expect(img).toHaveAttributeValue("srcset", img400);
     });
@@ -73,6 +77,7 @@ describe("setSources for iframe", () => {
     let iframe;
     let srcToLoad = "http://www.google.it";
     let preloadedSrc = srcToLoad + "/doodle";
+    let setSourcesForPicture = jest.fn();
 
     beforeEach(() => {
         iframe = document.createElement("iframe");
@@ -81,7 +86,8 @@ describe("setSources for iframe", () => {
         iframe.dataset = {
             "src": srcToLoad
         };
-        setSources(iframe, lazyloadSettings);
+        setSources(setSourcesForPicture, iframe, lazyloadSettings);
+        expect(setSourcesForPicture).not.toHaveBeenCalled();
         expect(iframe).toHaveAttributeValue("src", srcToLoad);
     });
     test("...with initial value in src", () => {
@@ -89,7 +95,8 @@ describe("setSources for iframe", () => {
             "src": srcToLoad
         };
         iframe.setAttribute("src", preloadedSrc);
-        setSources(iframe, lazyloadSettings);
+        setSources(setSourcesForPicture, iframe, lazyloadSettings);
+        expect(setSourcesForPicture).not.toHaveBeenCalled();
         expect(iframe).toHaveAttributeValue("src", srcToLoad);
     });
     test("...with initial value in src and empty data-src", () => {
@@ -97,7 +104,8 @@ describe("setSources for iframe", () => {
             "src": ""
         };
         iframe.setAttribute("src", preloadedSrc);
-        setSources(iframe, lazyloadSettings);
+        setSources(setSourcesForPicture, iframe, lazyloadSettings);
+        expect(setSourcesForPicture).not.toHaveBeenCalled();
         expect(iframe).toHaveAttributeValue("src", preloadedSrc);
     });
 });
@@ -106,6 +114,7 @@ describe("setSources for background image", () => {
     let element;
     let img100 = "http://placehold.it/100x100";
     let img200 = "http://placehold.it/200x200";
+    let setSourcesForPicture = jest.fn();
 
     beforeEach(() => {
         element = document.createElement("div");
@@ -115,7 +124,8 @@ describe("setSources for background image", () => {
         element.dataset = {
             "src": img200
         };
-        setSources(element, lazyloadSettings);
+        setSources(setSourcesForPicture, element, lazyloadSettings);
+        expect(setSourcesForPicture).not.toHaveBeenCalled();
         // Test cheating: bug in JsDOM doesn't return the url("") with quotes inside
         expect(element.style.backgroundImage).toBe(`url(${img200})`);
     });
@@ -126,7 +136,8 @@ describe("setSources for background image", () => {
         element.style = {
             padding: "1px"
         };
-        setSources(element, lazyloadSettings);
+        setSources(setSourcesForPicture, element, lazyloadSettings);
+        expect(setSourcesForPicture).not.toHaveBeenCalled();
         // Test cheating: bug in JsDOM doesn't return the url("") with quotes inside
         expect(element.style.backgroundImage).toBe(`url(${img100})`);
     });
@@ -138,7 +149,8 @@ describe("setSources for background image", () => {
             padding: "1px",
             backgroundImage: "url(" + img100 + ")"
         };
-        setSources(element, lazyloadSettings);
+        setSources(setSourcesForPicture, element, lazyloadSettings);
+        expect(setSourcesForPicture).not.toHaveBeenCalled();
         // Test cheating: bug in JsDOM doesn't return the url("") with quotes inside
         expect(element.style.backgroundImage).toBe(`url(${img200})`);
     });

@@ -1,4 +1,4 @@
-import {setSources} from "./lazyload.setSources";
+import {setSources, setSourcesForPicture} from "./lazyload.setSources";
 
 const callCallback = function (callback, argument) {
     if (callback) {
@@ -39,7 +39,7 @@ export default function (element, settings) {
         addOneShotListeners(element, settings);
         element.classList.add(settings.class_loading);
     }
-    setSources(element, settings);
+    setSources(setSourcesForPicture, element, settings);
     element.dataset.wasProcessed = true;
     callCallback(settings.callback_set, element);
 };

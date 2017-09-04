@@ -14,7 +14,7 @@ export const setSourcesForPicture = function (element, settings) {
     }
 };
 
-export const setSources = function (element, settings) {
+export const setSources = function (setSourcesForPicture, element, settings) {
     const {data_src: dataSrc, data_srcset: dataSrcSet} = settings;
     const tagName = element.tagName;
     const elementSrc = element.dataset[dataSrc];

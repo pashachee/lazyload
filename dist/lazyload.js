@@ -65,7 +65,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         }
     };
 
-    var setSources = function setSources(element, settings) {
+    var setSources = function setSources(setSourcesForPicture, element, settings) {
         var dataSrc = settings.data_src,
             dataSrcSet = settings.data_srcset;
 
@@ -132,7 +132,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
             addOneShotListeners(element, settings);
             element.classList.add(settings.class_loading);
         }
-        setSources(element, settings);
+        setSources(setSourcesForPicture, element, settings);
         element.dataset.wasProcessed = true;
         callCallback(settings.callback_set, element);
     };
