@@ -61,10 +61,12 @@ const setSourcesForPicture = function (element, settings) {
     }
 };
 
-const setSources = function (setSourcesForPicture, element, settings) {
+const setSources = function (deps, element, settings) {
     const {data_src: dataSrc, data_srcset: dataSrcSet} = settings;
+    const {setSourcesForPicture} = deps;
     const tagName = element.tagName;
     const elementSrc = element.dataset[dataSrc];
+    
     if (tagName === "IMG") {
         setSourcesForPicture(element, settings);
         const imgSrcset = element.dataset[dataSrcSet];
@@ -126,7 +128,7 @@ var revealElement = function (element, settings) {
         addOneShotListeners(element, settings);
         element.classList.add(settings.class_loading);
     }
-    setSources(setSourcesForPicture, element, settings);
+    setSources({setSourcesForPicture}, element, settings);
     element.dataset.wasProcessed = true;
     callCallback(settings.callback_set, element);
 };

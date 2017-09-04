@@ -39,7 +39,7 @@ export default function (element, settings) {
         addOneShotListeners(element, settings);
         element.classList.add(settings.class_loading);
     }
-    setSources(setSourcesForPicture, element, settings);
+    setSources({setSourcesForPicture}, element, settings);
     element.dataset.wasProcessed = true;
     callCallback(settings.callback_set, element);
 };

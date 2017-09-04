@@ -65,12 +65,14 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         }
     };
 
-    var setSources = function setSources(setSourcesForPicture, element, settings) {
+    var setSources = function setSources(deps, element, settings) {
         var dataSrc = settings.data_src,
             dataSrcSet = settings.data_srcset;
+        var setSourcesForPicture = deps.setSourcesForPicture;
 
         var tagName = element.tagName;
         var elementSrc = element.dataset[dataSrc];
+
         if (tagName === "IMG") {
             setSourcesForPicture(element, settings);
             var imgSrcset = element.dataset[dataSrcSet];
@@ -132,7 +134,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
             addOneShotListeners(element, settings);
             element.classList.add(settings.class_loading);
         }
-        setSources(setSourcesForPicture, element, settings);
+        setSources({ setSourcesForPicture: setSourcesForPicture }, element, settings);
         element.dataset.wasProcessed = true;
         callCallback(settings.callback_set, element);
     };

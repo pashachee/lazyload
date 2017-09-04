@@ -14,10 +14,12 @@ export const setSourcesForPicture = function (element, settings) {
     }
 };
 
-export const setSources = function (setSourcesForPicture, element, settings) {
+export const setSources = function (deps, element, settings) {
     const {data_src: dataSrc, data_srcset: dataSrcSet} = settings;
+    const {setSourcesForPicture} = deps;
     const tagName = element.tagName;
     const elementSrc = element.dataset[dataSrc];
+    
     if (tagName === "IMG") {
         setSourcesForPicture(element, settings);
         const imgSrcset = element.dataset[dataSrcSet];
